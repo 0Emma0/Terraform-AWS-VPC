@@ -30,7 +30,18 @@ Alternatively, to allow an instance in your VPC to initiate outbound connections
 If you associate an IPv6 CIDR block with your VPC and assign IPv6 addresses to your instances, instances can connect to the internet over IPv6 through an internet gateway. Alternatively, instances can initiate outbound connections to the internet over IPv6 using an egress-only internet gateway. IPv6 traffic is separate from IPv4 traffic; your route tables must include separate routes for IPv6 traffic.
 
 ### Difference between IGW vs NAT GW
-
+| Internet Gateway | NAT Gateway |
+| --- | --- |
+| Connects a VPC to the internet | Enables outbound traffic from a private subnet to the internet |
+| Acts as a virtual router between a VPC and the internet | Translates private IP addresses of instances to public IP addresses |
+| Required for resources within a VPC to be accessible from the internet | Used when resources within a private subnet require internet access but should not be directly accessible from the internet |
+| Instances within a public subnet must have public IP addresses to communicate with the internet | Instances within a private subnet can have private IP addresses |
+| Used for hosting publicly accessible resources like web servers | Used for instances that need to access the internet for updates or data retrieval |
+| Traffic is routed directly to the internet | Traffic is routed through the NAT Gateway before going to the internet |
+| Can be attached to only one VPC	| Can be shared across multiple VPCs |
+| Does not modify the source IP address | Replaces the source IP address with its own IP address |
+| It is typically used in corporate networks, where it serves as the default gateway for devices in the network. | A NAT gateway is typically used in smaller networks, such as home networks, where it is used to share a single internet connection between multiple devices. |
+| Internet Gateway serves as a point of entry and exit for network traffic between a private network and the internet | NAT Gateway is used to translate private IP addresses into public IP addresses and vice versa |
 
 ## Terraform code execution
 If you don't have the knowledge to create resources on AWS using Terraform, follow these instructions to have prerequisites in place, then run the Terraform commands: https://github.com/0Emma0/Terraform-AWS-EC2 
